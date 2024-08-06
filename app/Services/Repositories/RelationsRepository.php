@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Repositories;
 
+use App\Models\BaseModel;
 use App\Models\Entity;
 use App\Models\Relation;
 use RelationTypeEnum;
 
-class RelationRepository
+readonly class RelationsRepository extends BaseRepository
 {
-
-   public function createRelation(
+   public function create(
        Entity $firstEntity,
        Entity $secondEntity,
        RelationTypeEnum $relationType,
@@ -24,7 +24,7 @@ class RelationRepository
         return $relation;
    }
 
-    public function updateRelation(
+    public function update(
         Relation $relation,
         RelationTypeEnum $relationType,
         string $name = null,
@@ -39,11 +39,6 @@ class RelationRepository
         return $relation;
     }
 
-    public function deleteRelation(Relation $relation) : bool
-    {
-        return $relation->delete();
-    }
-
     protected function createEmptyRelation(RelationTypeEnum $relationType, string $name = null, array $properties = null) : Relation
     {
         $relation = new Relation();
@@ -53,5 +48,10 @@ class RelationRepository
         $relation->save();
 
         return $relation;
+    }
+
+    protected function getModel(): BaseModel
+    {
+        return new Relation();
     }
 }

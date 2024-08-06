@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Repositories;
 
+use App\Models\BaseModel;
 use App\Models\Project;
 use App\Models\User;
 
-class ProjectRepository
+readonly class ProjectsRepository extends BaseRepository
 {
-    public function createProject(User $user, string $name) : Project
+    public function create(User $user, string $name) : Project
     {
         $project = new Project();
         $project->user()->associate($user);
@@ -17,7 +18,7 @@ class ProjectRepository
         return $project;
     }
 
-    public function updateProject(Project $project, string $name) : Project
+    public function update(Project $project, string $name) : Project
     {
         $project->name = $name;
         $project->save();
@@ -25,8 +26,8 @@ class ProjectRepository
         return $project;
     }
 
-    public function deleteProject(Project $project) : bool
+    protected function getModel(): BaseModel
     {
-        return $project->delete();
+        return new Project();
     }
 }

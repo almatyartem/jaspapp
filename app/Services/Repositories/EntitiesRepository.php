@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Repositories;
 
+use App\Models\BaseModel;
 use App\Models\Entity;
 use App\Models\Project;
 
-class EntityRepository
+readonly class EntitiesRepository extends BaseRepository
 {
-    public function createEntity(Project $project, string $name, bool $isDraft = false) : Entity
+    public function create(Project $project, string $name, bool $isDraft = false) : Entity
     {
         $entity = new Entity();
         $entity->project()->associate($project);
@@ -18,7 +19,7 @@ class EntityRepository
         return $entity;
     }
 
-    public function updateEntity(Entity $entity, string $name, bool $isDraft = false) : Entity
+    public function update(Entity $entity, string $name, bool $isDraft = false) : Entity
     {
         $entity->name = $name;
         $entity->is_draft = $isDraft;
@@ -27,8 +28,8 @@ class EntityRepository
         return $entity;
     }
 
-    public function deleteEntity(Entity $entity) : bool
+    protected function getModel(): BaseModel
     {
-        return $entity->delete();
+        return new Entity();
     }
 }
