@@ -3,10 +3,10 @@
 namespace App\Services\Repositories;
 
 use App\Models\Attribute;
-use App\Models\BaseModel;
+use App\Models\Base\BaseModel;
 use App\Models\Entity;
+use App\Models\Interfaces\TunedModel;
 use App\Models\Type;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 readonly class AttributesRepository extends BaseRepository
 {
@@ -32,7 +32,7 @@ readonly class AttributesRepository extends BaseRepository
         return $attribute;
     }
 
-    protected function getModel(): BaseModel
+    protected function getModel(): TunedModel
     {
         return new Attribute();
     }

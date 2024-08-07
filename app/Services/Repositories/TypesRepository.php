@@ -2,7 +2,8 @@
 
 namespace App\Services\Repositories;
 
-use App\Models\BaseModel;
+use App\Models\Base\BaseModel;
+use App\Models\Interfaces\TunedModel;
 use App\Models\Type;
 
 readonly class TypesRepository extends BaseRepository
@@ -26,7 +27,7 @@ readonly class TypesRepository extends BaseRepository
         return $type;
     }
 
-    protected function getModel(): BaseModel
+    protected function getModel(): TunedModel
     {
         return new Type();
     }

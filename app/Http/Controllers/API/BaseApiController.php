@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BaseIndexRequest;
 use App\Http\Resources\BaseResource;
-use App\Models\BaseModel;
 use App\Services\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -15,7 +15,7 @@ use Illuminate\Http\JsonResponse;
  */
 abstract class BaseApiController extends Controller
 {
-    protected function delete(BaseModel $model) : JsonResponse
+    protected function delete(Model $model) : JsonResponse
     {
         return $this->boolResponse($this->repository->delete($model));
     }

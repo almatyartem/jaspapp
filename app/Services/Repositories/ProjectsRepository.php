@@ -2,7 +2,8 @@
 
 namespace App\Services\Repositories;
 
-use App\Models\BaseModel;
+use App\Models\Base\BaseModel;
+use App\Models\Interfaces\TunedModel;
 use App\Models\Project;
 use App\Models\User;
 
@@ -26,7 +27,7 @@ readonly class ProjectsRepository extends BaseRepository
         return $project;
     }
 
-    protected function getModel(): BaseModel
+    protected function getModel(): TunedModel
     {
         return new Project();
     }

@@ -13,10 +13,16 @@ class UserResource extends BaseResource
 {
     public function toArray(Request $request): array
     {
-        return [
+        $data = [
             'id' => $this->resource->id,
             'name' => $this->resource->name,
             'email' => $this->resource->email,
         ];
+
+        if($token = $this->resource->getAccessToken()){
+            $data['access_token'] = $token;
+        }
+
+        return $data;
     }
 }

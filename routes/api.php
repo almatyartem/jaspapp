@@ -5,6 +5,12 @@ use App\Http\Controllers\API\Admin\Types\TypeDeleteController;
 use App\Http\Controllers\API\Admin\Types\TypeShowController;
 use App\Http\Controllers\API\Admin\Types\TypesIndexController;
 use App\Http\Controllers\API\Admin\Types\TypeUpdateController;
+use App\Http\Controllers\API\Auth\CurrentUserController;
+use App\Http\Controllers\API\Auth\ForgotPasswordController;
+use App\Http\Controllers\API\Auth\LoginController;
+use App\Http\Controllers\API\Auth\LogoutController;
+use App\Http\Controllers\API\Auth\RegisterController;
+use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Middleware\HasAccessToProject;
 
 Route::prefix('admin')->middleware('role:admin')->name('admin.')->group(function () {
@@ -55,5 +61,16 @@ Route::middleware('role:user')->group(function () {
                 });
             });
         });
+    });
+});
+Route::name('auth.')->group(function () {
+    Route::post('login', LoginController::class)->name('login');
+    Route::post('register', RegisterController::class)->name('register');
+    Route::get('logout', LogoutController::class)->name('logout');
+    Route::get('/', CurrentUserController::class)->name('user');
+
+    Route::prefix('password')->name('password.')->group(function () {
+        Route::post('forgot', ForgotPasswordController::class)->name('forgot');
+        Route::post('reset', ResetPasswordController::class)->name('reset');
     });
 });

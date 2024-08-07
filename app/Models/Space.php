@@ -2,20 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Base\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Account extends BaseModel
+class Space extends BaseModel
 {
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(
             User::class,
-            'accounts_users',
-            'account_id',
+            'spaces_users',
+            'space_id',
             'user_id'
-        );
+        )->withPivot(['is_owner']);
     }
 
     public function projects()

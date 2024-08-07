@@ -2,8 +2,9 @@
 
 namespace App\Services\Repositories;
 
-use App\Models\BaseModel;
+use App\Models\Base\BaseModel;
 use App\Models\Entity;
+use App\Models\Interfaces\TunedModel;
 use App\Models\Project;
 
 readonly class EntitiesRepository extends BaseRepository
@@ -28,7 +29,7 @@ readonly class EntitiesRepository extends BaseRepository
         return $entity;
     }
 
-    protected function getModel(): BaseModel
+    protected function getModel(): TunedModel
     {
         return new Entity();
     }

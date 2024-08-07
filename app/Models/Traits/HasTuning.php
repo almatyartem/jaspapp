@@ -1,15 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Traits;
 
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
-abstract class BaseModel extends Model
-{
-    protected $guarded = [];
-
+trait HasTuning {
     use Filterable;
 
     public function scopeSort(
@@ -20,4 +16,15 @@ abstract class BaseModel extends Model
             return $q->orderBy($sorting['field'], $sorting['type']);
         });
     }
+    public function sort(array $sorting = [])
+    {
+        return $this->callNamedScope('sort', ['sorting' => $sorting]);
+    }
+
+    public function filter(array $filters = [])
+    {
+        return $this->callNamedScope('filter', ['filters' => $filters]);
+    }
+
+    abstract public function callNamedScope($scope, array $parameters = []);
 }

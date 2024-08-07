@@ -2,15 +2,14 @@
 
 namespace App\Services\Repositories;
 
-use App\Models\Attribute;
-use App\Models\BaseModel;
-use App\Models\Entity;
-use App\Models\Type;
+use App\Models\Base\BaseModel;
+use App\Models\Interfaces\TunedModel;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 abstract readonly class BaseRepository
 {
-    abstract protected function getModel(): BaseModel;
+    abstract protected function getModel(): TunedModel;
 
     public function getPaginatedList(
         int $perPage,
@@ -25,7 +24,7 @@ abstract readonly class BaseRepository
             ->paginate($perPage);
     }
 
-    public function delete(BaseModel $record) : bool
+    public function delete(Model $record) : bool
     {
         return $record->delete();
     }

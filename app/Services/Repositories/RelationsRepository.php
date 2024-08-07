@@ -2,10 +2,12 @@
 
 namespace App\Services\Repositories;
 
-use App\Models\BaseModel;
+use App\Enums\RelationTypeEnum;
+use App\Models\Base\BaseModel;
 use App\Models\Entity;
+use App\Models\Interfaces\TunedModel;
 use App\Models\Relation;
-use RelationTypeEnum;
+
 
 readonly class RelationsRepository extends BaseRepository
 {
@@ -50,7 +52,7 @@ readonly class RelationsRepository extends BaseRepository
         return $relation;
     }
 
-    protected function getModel(): BaseModel
+    protected function getModel(): TunedModel
     {
         return new Relation();
     }

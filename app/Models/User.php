@@ -3,10 +3,18 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Interfaces\TunedModel;
+use App\Models\Traits\HasTuning;
+use App\Models\Traits\TuningModel;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\Contracts\HasAbilities;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\NewAccessToken;
 
 /**
  *
@@ -37,9 +45,9 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable
+class User extends Authenticatable implements TunedModel
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasTuning, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -75,8 +83,18 @@ class User extends Authenticatable
         ];
     }
 
-    public function accounts(): HasMany
+    public function spaces(): BelongsToMany
     {
-        return $this->hasMany(Account::class);
+        return $this->belongsToMany(
+            Space::class,
+            'spaces_users',
+            'user_id',
+            'space_id'
+        )->withPivot(['is_owner']);
+    }
+
+    public function getAccessToken() : ?string
+    {
+        return $this->accessToken?->plainTextToken;
     }
 }

@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Base\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
 use RelationTypeEnum;
 
 /**
- * 
+ *
  *
  * @property int $id;
  * @property string $name
