@@ -11,11 +11,10 @@ abstract class EntitiesController extends BaseApiController
 {
     public function __construct(
         protected readonly EntitiesRepository $repository,
-        protected readonly EntityResource $resource
-    ){}
+    ) {}
 
-    protected function resource(Entity $model) : EntityResource
+    protected function resource(Entity $model): EntityResource
     {
-        return $this->resource->make($model);
+        return EntityResource::make($model);
     }
 }

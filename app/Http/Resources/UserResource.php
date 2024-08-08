@@ -20,7 +20,7 @@ class UserResource extends BaseResource
         ];
 
         if($token = $this->resource->getAccessToken()){
-            $data['access_token'] = $token;
+            $data['token'] = $token;
         }
 
         return $data;

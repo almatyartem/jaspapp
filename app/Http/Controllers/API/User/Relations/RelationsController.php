@@ -10,12 +10,11 @@ use App\Services\Repositories\RelationsRepository;
 abstract class RelationsController extends BaseApiController
 {
     public function __construct(
-        protected readonly RelationsRepository $repository,
-        protected readonly RelationResource $resource
-    ){}
+        protected readonly RelationsRepository $repository
+    ) {}
 
-    protected function resource(Relation $model) : RelationResource
+    protected function resource(Relation $model): RelationResource
     {
-        return $this->resource->make($model);
+        return RelationResource::make($model);
     }
 }

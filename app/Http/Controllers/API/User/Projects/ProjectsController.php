@@ -11,11 +11,10 @@ abstract class ProjectsController extends BaseApiController
 {
     public function __construct(
         protected readonly ProjectsRepository $repository,
-        protected readonly ProjectResource $resource
     ){}
 
     protected function resource(Project $model) : ProjectResource
     {
-        return $this->resource->make($model);
+        return ProjectResource::make($model);
     }
 }

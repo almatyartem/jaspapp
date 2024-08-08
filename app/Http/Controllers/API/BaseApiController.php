@@ -37,6 +37,6 @@ abstract class BaseApiController extends Controller
 
     protected function boolResponse(bool $isSucceed) : JsonResponse
     {
-        return response()->json(['success' => $isSucceed], $isSucceed ? 200 : 400);
+        return response()->json(['data' => ['success' => $isSucceed]], $isSucceed ? 200 : 400);
     }
 }

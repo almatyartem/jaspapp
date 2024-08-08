@@ -10,12 +10,11 @@ use App\Services\Repositories\TypesRepository;
 abstract class TypesController extends BaseApiController
 {
     public function __construct(
-        protected readonly TypesRepository $repository,
-        protected readonly TypeResource $resource
-    ){}
+        protected readonly TypesRepository $repository
+    ) {}
 
-    protected function resource(Type $model) : TypeResource
+    protected function resource(Type $model): TypeResource
     {
-        return $this->resource->make($model);
+        return TypeResource::make($model);
     }
 }

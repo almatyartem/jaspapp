@@ -11,11 +11,10 @@ abstract class AttributesController extends BaseApiController
 {
     public function __construct(
         protected readonly AttributesRepository $repository,
-        protected readonly AttributeResource $resource
     ){}
 
     protected function resource(Attribute $model) : AttributeResource
     {
-        return $this->resource->make($model);
+        return AttributeResource::make($model);
     }
 }

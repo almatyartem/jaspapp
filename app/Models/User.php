@@ -2,23 +2,16 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Interfaces\TunedModel;
 use App\Models\Traits\HasTuning;
-use App\Models\Traits\TuningModel;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\Contracts\HasAbilities;
 use Laravel\Sanctum\HasApiTokens;
-use Laravel\Sanctum\NewAccessToken;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
- *
- *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -31,6 +24,7 @@ use Laravel\Sanctum\NewAccessToken;
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Project> $projects
  * @property-read int|null $projects_count
+ *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -43,11 +37,14 @@ use Laravel\Sanctum\NewAccessToken;
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable implements TunedModel
 {
-    use HasApiTokens, HasTuning, HasFactory, Notifiable;
+    const ROLE_ADMIN = 'admin';
+
+    use HasApiTokens, HasFactory, HasRoles, HasTuning, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -93,7 +90,12 @@ class User extends Authenticatable implements TunedModel
         )->withPivot(['is_owner']);
     }
 
-    public function getAccessToken() : ?string
+    public function guardName()
+    {
+        return 'api';
+    }
+
+    public function getAccessToken(): ?string
     {
         return $this->accessToken?->plainTextToken;
     }
